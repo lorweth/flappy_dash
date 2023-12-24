@@ -1,4 +1,3 @@
-import 'package:flame/flame.dart';
 import 'package:flappy_dash/router.dart';
 import 'package:flappy_dash/style/palette.dart';
 import 'package:flutter/material.dart';
@@ -7,9 +6,9 @@ import 'package:nes_ui/nes_ui.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Flame.device.fullScreen();
-  await Flame.device.setPortrait();
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await Flame.device.fullScreen();
+  // await Flame.device.setPortrait();
   runApp(const MyGame());
 }
 
