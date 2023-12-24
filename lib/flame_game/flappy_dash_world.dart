@@ -17,7 +17,10 @@ class FlappyDashWorld extends World with TapCallbacks, HasGameReference {
 
   /// The gravity is defined in virtual pixels per second squared.
   /// These pixels are in relation to how big the [FixedResolutionViewport] is.
-  final double gravity = 30;
+  final double gravity = 10;
+
+  /// Where the sky is located in the world and things should stop jumping.
+  late final double skyLevel = (size.y / 5) - (size.y / 2);
 
   /// Where the ground is located in the world and things should stop falling.
   late final double groundLevel = (size.y / 2) - (size.y / 5);
@@ -27,15 +30,14 @@ class FlappyDashWorld extends World with TapCallbacks, HasGameReference {
   @override
   Future<void> onLoad() async {
     player = Player(
-      position: Vector2(0,0),
+      position: Vector2(0, 0),
     );
     add(player);
   }
 
   @override
   void onTapDown(TapDownEvent event) {
-    log.info('User has tap on {${event.localPosition.x}; ${event.localPosition.y}}');
-    scoreNotifier.value++;
+    player.jump();
   }
 
   @override
