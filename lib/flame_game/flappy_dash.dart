@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class FlappyDash extends FlameGame<FlappyDashWorld> with HasCollisionDetection {
   FlappyDash(): super(
     world: FlappyDashWorld(),
-    camera: CameraComponent.withFixedResolution(width: 1600, height: 720),
+    camera: CameraComponent.withFixedResolution(width: 720, height: 1600),
   );
 
   @override

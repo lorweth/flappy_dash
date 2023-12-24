@@ -74,6 +74,11 @@ flutter:
     - assets/images/dash/
     - assets/images/pipe/
 
+  fonts:
+    - family: Press Start 2P
+      fonts:
+        - asset: assets/fonts/Press_Start_2P/PressStart2P-Regular.ttf
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
