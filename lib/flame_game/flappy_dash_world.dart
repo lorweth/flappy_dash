@@ -56,6 +56,13 @@ class FlappyDashWorld extends World with TapCallbacks, HasGameReference {
       ),
     );
     addAll(wallPool.components);
+
+    final ground = Ground(
+      position: Vector2(0, groundLevel),
+      scale: Vector2(2.3, 3),
+      anchor: Anchor.topCenter,
+    );
+    add(ground);
   }
 
   @override
