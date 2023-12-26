@@ -1,13 +1,19 @@
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
+import 'package:flappy_dash/audio/audio_controller.dart';
 import 'package:flappy_dash/flame_game/flappy_dash_world.dart';
 import 'package:flutter/material.dart';
 
 class FlappyDash extends FlameGame<FlappyDashWorld> with HasCollisionDetection {
-  FlappyDash(): super(
-    world: FlappyDashWorld(),
-    camera: CameraComponent.withFixedResolution(width: 720, height: 1600),
-  );
+  /// A helper for playing sound effects and background audio.
+  final AudioController audioController;
+
+  FlappyDash({
+    required this.audioController,
+  }) : super(
+          world: FlappyDashWorld(),
+          camera: CameraComponent.withFixedResolution(width: 720, height: 1600),
+        );
 
   @override
   Future<void> onLoad() async {
@@ -33,5 +39,8 @@ class FlappyDash extends FlameGame<FlappyDashWorld> with HasCollisionDetection {
     world.scoreNotifier.addListener(() {
       scoreComponent.text = '${world.scoreNotifier.value}';
     });
+
+    // Preload all Sfx audio when start
+    audioController.preloadSfx();
   }
 }

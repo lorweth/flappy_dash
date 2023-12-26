@@ -1,5 +1,6 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flappy_dash/audio/sounds.dart';
 import 'package:flappy_dash/flame_game/components/obstacle.dart';
 import 'package:flappy_dash/flame_game/effects/hurt_effect.dart';
 import 'package:flappy_dash/flame_game/effects/jump_effect.dart';
@@ -101,7 +102,7 @@ class Player extends SpriteAnimationGroupComponent<PlayerState>
     super.onCollisionStart(intersectionPoints, other);
     // When the player collides with an obstacle it should lose all its points.
     if (other is Obstacle) {
-      // game.audioController.playSfx(SfxType.damage);
+      game.audioController.playSfx(SfxType.damage);
       // resetScore();
       add(HurtEffect());
     }
@@ -110,6 +111,7 @@ class Player extends SpriteAnimationGroupComponent<PlayerState>
   void jump() {
     if (position.y + size.y / 2 > world.skyLevel) {
       final jumpEffect = JumpEffect(Vector2(0, -1)..scaleTo(_jumpLength));
+      game.audioController.playSfx(SfxType.jump);
       add(jumpEffect);
     }
   }
