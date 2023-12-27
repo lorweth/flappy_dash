@@ -7,6 +7,7 @@ import 'package:flappy_dash/flame_game/effects/hurt_effect.dart';
 import 'package:flappy_dash/flame_game/effects/jump_effect.dart';
 import 'package:flappy_dash/flame_game/flappy_dash.dart';
 import 'package:flappy_dash/flame_game/flappy_dash_world.dart';
+import 'package:flutter/material.dart';
 
 class Player extends SpriteAnimationGroupComponent<PlayerState>
     with
@@ -25,6 +26,9 @@ class Player extends SpriteAnimationGroupComponent<PlayerState>
   bool get isFalling => _lastHeight < position.y;
 
   bool get isJumping => _lastHeight > position.y;
+
+  final _defaultColor = Colors.green;
+  late final ShapeHitbox hitbox;
 
   // Constructor
   Player({
@@ -63,7 +67,14 @@ class Player extends SpriteAnimationGroupComponent<PlayerState>
     // When adding a CircleHitbox without any arguments it automatically
     // fills up the size of the component as much as it can without overflowing
     // it.
-    add(CircleHitbox());
+    final defaultPaint = Paint()
+      ..color = _defaultColor
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 5;
+    hitbox = CircleHitbox()
+      ..paint = defaultPaint
+      ..renderShape = true;
+    add(hitbox);
   }
 
   @override
