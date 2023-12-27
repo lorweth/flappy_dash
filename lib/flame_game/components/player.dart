@@ -2,6 +2,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flappy_dash/audio/sounds.dart';
 import 'package:flappy_dash/flame_game/components/obstacle.dart';
+import 'package:flappy_dash/flame_game/components/point.dart';
 import 'package:flappy_dash/flame_game/effects/hurt_effect.dart';
 import 'package:flappy_dash/flame_game/effects/jump_effect.dart';
 import 'package:flappy_dash/flame_game/flappy_dash.dart';
@@ -105,6 +106,9 @@ class Player extends SpriteAnimationGroupComponent<PlayerState>
       game.audioController.playSfx(SfxType.damage);
       // resetScore();
       add(HurtEffect());
+    } else if (other is Point) {
+      game.audioController.playSfx(SfxType.score);
+      world.scoreNotifier.value++;
     }
   }
 

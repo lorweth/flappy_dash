@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flame/components.dart';
 import 'package:flappy_dash/flame_game/components/pipe.dart';
+import 'package:flappy_dash/flame_game/components/point.dart';
 
 class Pipes extends PositionComponent {
   final Vector2 worldSize;
@@ -12,30 +13,39 @@ class Pipes extends PositionComponent {
 
   final Random _random = Random();
 
-  Pipes({
-    super.position,
-    super.anchor,
-    required this.worldSize,
-    required this.worldSpeed,
-    required this.worldGroundLevel,
-    double? scale
-  }): _scale = scale ?? 1;
+  Pipes(
+      {super.position,
+      super.anchor,
+      required this.worldSize,
+      required this.worldSpeed,
+      required this.worldGroundLevel,
+      double? scale})
+      : _scale = scale ?? 1;
 
   @override
   Future<void> onLoad() async {
     const pipeImage = 'pipe/PipeStyle1.png';
 
+    final topColPos = Vector2(0, -worldSize.y / 7);
+    final botColPos = Vector2(0, worldSize.y / 8);
+    final pointPos = Vector2(0, (topColPos.y + botColPos.y) / 2);
+
     final components = [
       Pipe(
         image: pipeImage,
         anchor: Anchor.bottomCenter,
-        position: Vector2(0, -worldSize.y / 7),
+        position: topColPos,
         scale: _scale,
+      ),
+      ScorePoint(
+        position: pointPos,
+        anchor: Anchor.center,
+        size: Vector2(32, 96)..scale(_scale),
       ),
       Pipe(
         image: pipeImage,
         anchor: Anchor.topCenter,
-        position: Vector2(0, worldSize.y / 8),
+        position: botColPos,
         scale: _scale,
       )
     ];
@@ -59,7 +69,7 @@ class Pipes extends PositionComponent {
       position.x = worldSize.x;
 
       final maxHeight = -worldSize.y / 4;
-      final minHeight = worldGroundLevel/2;
+      final minHeight = worldGroundLevel / 2;
       position.y = (_random.nextDouble() * (maxHeight - minHeight)) + minHeight;
     }
   }
