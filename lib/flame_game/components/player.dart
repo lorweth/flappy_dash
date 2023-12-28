@@ -27,12 +27,17 @@ class Player extends SpriteAnimationGroupComponent<PlayerState>
 
   bool get isJumping => _lastHeight > position.y;
 
+  final VoidCallback onDie;
+  final void Function({int amount}) addScore;
+
   final _defaultColor = Colors.green;
   late final ShapeHitbox hitbox;
 
   // Constructor
   Player({
     super.position,
+    required this.onDie,
+    required this.addScore,
   }) : super(
           size: Vector2.all(150),
           anchor: Anchor.center,
@@ -115,11 +120,11 @@ class Player extends SpriteAnimationGroupComponent<PlayerState>
     // When the player collides with an obstacle it should lose all its points.
     if (other is Obstacle) {
       game.audioController.playSfx(SfxType.damage);
-      // resetScore();
       add(HurtEffect());
+      onDie();
     } else if (other is Point) {
       game.audioController.playSfx(SfxType.score);
-      world.scoreNotifier.value++;
+      addScore();
     }
   }
 

@@ -1,4 +1,6 @@
 import 'package:flappy_dash/flame_game/game_scene.dart';
+import 'package:flappy_dash/main_menu/main_menu.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 
 /// The router describes the game's navigational hierarchy, from the main
@@ -8,8 +10,16 @@ final router = GoRouter(
     GoRoute(
       path: '/',
       builder: (context, state) {
-        return const GameScene();
+        return const MainMenu(key: Key('main menu'));
       },
+      routes: [
+        GoRoute(
+          path: 'play',
+          builder: (context, state) {
+            return const GameScene(key: ValueKey('play'));
+          }
+        )
+      ]
     )
   ],
 );

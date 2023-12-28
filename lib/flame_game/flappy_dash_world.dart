@@ -12,12 +12,12 @@ import 'package:logging/logging.dart';
 
 
 class FlappyDashWorld extends World with TapCallbacks, HasGameReference {
-  final log = Logger('FlappyDashWorld');
+  final _log = Logger('FlappyDashWorld');
 
   final scoreNotifier = ValueNotifier(0);
 
   late final Player player;
-  late final int wallNumber = 3;
+  late final int wallNumber = 1;
 
   Vector2 get size => (parent as FlameGame).size;
 
@@ -49,6 +49,10 @@ class FlappyDashWorld extends World with TapCallbacks, HasGameReference {
     // Add player to the world
     player = Player(
       position: Vector2(0, 0),
+      onDie: (){
+        stopGame();
+      },
+      addScore: addScore,
     );
     add(player);
 
@@ -57,6 +61,7 @@ class FlappyDashWorld extends World with TapCallbacks, HasGameReference {
       wallNumber,
       Vector2((size.x / wallNumber) + (32*obstacleScale), 0),
       () => Pipes(
+        position: Vector2(size.x, 0),
         worldSize: size,
         worldSpeed: speed,
         worldGroundLevel: groundLevel,
@@ -71,6 +76,32 @@ class FlappyDashWorld extends World with TapCallbacks, HasGameReference {
       anchor: Anchor.topCenter,
     );
     add(ground);
+  }
+
+  // Stop game
+  void stopGame(){
+    _log.fine('stopping game');
+
+    game.pauseEngine();
+    game.overlays.add(GameScene.pauseDialogKey);
+  }
+
+  void restart(){
+    _log.fine('restart');
+
+    resetScore();
+    game.overlays.remove(GameScene.pauseDialogKey);
+    game.resumeEngine();
+  }
+
+  /// Gives the player points, with a default value +1 points.
+  void addScore({int amount = 1}) {
+    scoreNotifier.value += amount;
+  }
+
+  /// Sets the player's score to 0 again.
+  void resetScore() {
+    scoreNotifier.value = 0;
   }
 
   @override

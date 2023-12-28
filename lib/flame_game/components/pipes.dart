@@ -13,14 +13,14 @@ class Pipes extends PositionComponent {
 
   final Random _random = Random();
 
-  Pipes(
-      {super.position,
-      super.anchor,
-      required this.worldSize,
-      required this.worldSpeed,
-      required this.worldGroundLevel,
-      double? scale})
-      : _scale = scale ?? 1;
+  Pipes({
+    super.position,
+    super.anchor,
+    required this.worldSize,
+    required this.worldSpeed,
+    required this.worldGroundLevel,
+    double? scale,
+  }) : _scale = scale ?? 1;
 
   @override
   Future<void> onLoad() async {
