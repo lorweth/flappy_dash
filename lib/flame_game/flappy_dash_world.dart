@@ -10,7 +10,6 @@ import 'package:flappy_dash/flame_game/game_scene.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 
-
 class FlappyDashWorld extends World with TapCallbacks, HasGameReference {
   final _log = Logger('FlappyDashWorld');
 
@@ -25,9 +24,6 @@ class FlappyDashWorld extends World with TapCallbacks, HasGameReference {
   /// These pixels are in relation to how big the [FixedResolutionViewport] is.
   final double gravity = 10;
 
-  /// Where the sky is located in the world and things should stop jumping.
-  late final double skyLevel = (size.y / 5) - (size.y / 2);
-
   /// Where the ground is located in the world and things should stop falling.
   late final double groundLevel = (size.y / 2) - (size.y / 5);
 
@@ -40,7 +36,7 @@ class FlappyDashWorld extends World with TapCallbacks, HasGameReference {
   @override
   Future<void> onLoad() async {
     final background = Background(
-      position: Vector2(0,0),
+      position: Vector2(0, 0),
       size: Vector2(size.x, size.y),
       anchor: Anchor.center,
     );
@@ -49,7 +45,7 @@ class FlappyDashWorld extends World with TapCallbacks, HasGameReference {
     // Add player to the world
     player = Player(
       position: Vector2(0, 0),
-      onDie: (){
+      onDie: () {
         stopGame();
       },
       addScore: addScore,
@@ -59,14 +55,13 @@ class FlappyDashWorld extends World with TapCallbacks, HasGameReference {
     const obstacleScale = 3.0;
     final wallPool = ComponentPool<Pipes>.builder(
       wallNumber,
-      Vector2((size.x / wallNumber) + (32*obstacleScale), 0),
+      Vector2((size.x / wallNumber) + (32 * obstacleScale), 0),
       () => Pipes(
-        position: Vector2(size.x, 0),
-        worldSize: size,
-        worldSpeed: speed,
-        worldGroundLevel: groundLevel,
-        scale: obstacleScale
-      ),
+          position: Vector2(size.x, 0),
+          worldSize: size,
+          worldSpeed: speed,
+          worldGroundLevel: groundLevel,
+          scale: obstacleScale),
     );
     addAll(wallPool.components);
 
@@ -79,14 +74,14 @@ class FlappyDashWorld extends World with TapCallbacks, HasGameReference {
   }
 
   // Stop game
-  void stopGame(){
+  void stopGame() {
     _log.fine('stopping game');
 
     game.pauseEngine();
     game.overlays.add(GameScene.pauseDialogKey);
   }
 
-  void restart(){
+  void restart() {
     _log.fine('restart');
 
     resetScore();

@@ -1,6 +1,7 @@
 import 'package:flame/flame.dart';
 import 'package:flappy_dash/audio/audio_controller.dart';
 import 'package:flappy_dash/router.dart';
+import 'package:flappy_dash/settings/settings.dart';
 import 'package:flappy_dash/style/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -22,7 +23,8 @@ class MyGame extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider(create: (context) => Palette()), // Provide palette
-        Provider(create: (context) => AudioController()) // Provide audio
+        Provider(create: (context) => AudioController()), // Provide audio
+        Provider(create: (context) => SettingsController()) // Provide settings
       ],
       child: Builder(builder: (context) {
         final palette = context.watch<Palette>();

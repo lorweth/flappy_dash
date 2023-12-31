@@ -50,6 +50,15 @@ class MainMenu extends StatelessWidget {
               child: const Text('Play'),
             ),
             _gap,
+            NesButton(
+                type: NesButtonType.normal,
+                onPressed: (){
+                  audioController.playSfx(SfxType.buttonTap);
+                  GoRouter.of(context).go('/settings');
+                },
+                child: const Text('Settings'),
+            ),
+            _gap,
             const Text('Built with Flame'),
           ],
         ),

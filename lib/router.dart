@@ -1,5 +1,6 @@
 import 'package:flappy_dash/flame_game/game_scene.dart';
 import 'package:flappy_dash/main_menu/main_menu.dart';
+import 'package:flappy_dash/settings/setting_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 
@@ -17,6 +18,12 @@ final router = GoRouter(
           path: 'play',
           builder: (context, state) {
             return const GameScene(key: ValueKey('play'));
+          }
+        ),
+        GoRoute(
+          path: 'settings',
+          builder: (context, state) {
+            return const SettingsScreen(key: ValueKey('settings'));
           }
         )
       ]

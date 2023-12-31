@@ -72,13 +72,17 @@ class Player extends SpriteAnimationGroupComponent<PlayerState>
     // When adding a CircleHitbox without any arguments it automatically
     // fills up the size of the component as much as it can without overflowing
     // it.
-    final defaultPaint = Paint()
-      ..color = _defaultColor
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 5;
-    hitbox = CircleHitbox()
-      ..paint = defaultPaint
-      ..renderShape = true;
+    hitbox = CircleHitbox();
+    if (game.isDebug) {
+      final defaultPaint = Paint()
+        ..color = _defaultColor
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 5;
+
+      hitbox.paint = defaultPaint;
+      hitbox.renderShape = true;
+    }
+
     add(hitbox);
   }
 
@@ -121,7 +125,10 @@ class Player extends SpriteAnimationGroupComponent<PlayerState>
     if (other is Obstacle) {
       game.audioController.playSfx(SfxType.damage);
       add(HurtEffect());
-      onDie();
+
+      if (!game.isDebug) {
+        onDie();
+      }
     } else if (other is Point) {
       game.audioController.playSfx(SfxType.score);
       addScore();
@@ -129,7 +136,8 @@ class Player extends SpriteAnimationGroupComponent<PlayerState>
   }
 
   void jump() {
-    if (position.y + size.y / 2 > world.skyLevel) {
+    final maxJumpAltitude = -(world.size.y / 2) + size.y;
+    if (position.y + size.y / 2 > maxJumpAltitude) {
       final jumpEffect = JumpEffect(Vector2(0, -1)..scaleTo(_jumpLength));
       game.audioController.playSfx(SfxType.jump);
       add(jumpEffect);

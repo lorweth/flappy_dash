@@ -2,8 +2,15 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flappy_dash/flame_game/components/obstacle.dart';
 import 'package:flappy_dash/flame_game/flappy_dash.dart';
+import 'package:flutter/material.dart';
 
-class Ground extends SpriteComponent with HasGameReference<FlappyDash> implements Obstacle {
+class Ground extends SpriteComponent
+    with HasGameReference<FlappyDash>
+    implements Obstacle {
+
+  final _defaultColor = Colors.red;
+  late ShapeHitbox hitbox;
+
   Ground({
     super.position,
     super.anchor,
@@ -22,6 +29,17 @@ class Ground extends SpriteComponent with HasGameReference<FlappyDash> implement
       srcSize: Vector2(336, 112),
     );
 
-    add(RectangleHitbox());
+    hitbox = RectangleHitbox();
+    if (game.isDebug) {
+      final defaultPaint = Paint()
+        ..color = _defaultColor
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 1;
+
+      hitbox.paint = defaultPaint;
+      hitbox.renderShape = true;
+    }
+
+    add(hitbox);
   }
 }

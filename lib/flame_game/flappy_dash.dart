@@ -8,9 +8,14 @@ class FlappyDash extends FlameGame<FlappyDashWorld> with HasCollisionDetection {
   /// A helper for playing sound effects and background audio.
   final AudioController audioController;
 
+  /// Show hit box and something help for development
+  final bool isDebug;
+
   FlappyDash({
     required this.audioController,
-  }) : super(
+    bool? isDebug,
+  })  : isDebug = isDebug ?? false,
+        super(
           world: FlappyDashWorld(),
           camera: CameraComponent.withFixedResolution(width: 720, height: 1600),
         );

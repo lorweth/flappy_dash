@@ -2,9 +2,12 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/sprite.dart';
 import 'package:flappy_dash/flame_game/components/obstacle.dart';
+import 'package:flappy_dash/flame_game/flappy_dash.dart';
 import 'package:flutter/material.dart';
 
-class Pipe extends PositionComponent implements Obstacle{
+class Pipe extends PositionComponent
+    with HasGameReference<FlappyDash>
+    implements Obstacle {
   final String image;
   final Vector2 _srcSize;
   final Vector2 _srcPos;
@@ -63,15 +66,18 @@ class Pipe extends PositionComponent implements Obstacle{
     ));
 
     // Calculate component size
-    size = Vector2(_srcSize.x*_scale, _srcSize.y*_scale*pipeLength);
+    size = Vector2(_srcSize.x * _scale, _srcSize.y * _scale * pipeLength);
 
-    final defaultPaint = Paint()
-      ..color = _defaultColor
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 5;
-    hitbox = RectangleHitbox()
-      ..paint = defaultPaint
-      ..renderShape = true;
+    hitbox = RectangleHitbox();
+    if (game.isDebug) {
+      final defaultPaint = Paint()
+        ..color = _defaultColor
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 5;
+
+      hitbox.paint = defaultPaint;
+      hitbox.renderShape = true;
+    }
 
     add(hitbox);
   }

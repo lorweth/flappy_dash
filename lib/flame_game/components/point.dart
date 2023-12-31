@@ -1,11 +1,14 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flappy_dash/flame_game/flappy_dash.dart';
 import 'package:flutter/material.dart';
 
 /// abstract class [Point] add score point when colliding with [Player]
 abstract class Point {}
 
-class ScorePoint extends PositionComponent implements Point {
+class ScorePoint extends PositionComponent
+    with HasGameRef<FlappyDash>
+    implements Point {
   final _defaultColor = Colors.green;
   late ShapeHitbox hitbox;
 
@@ -17,13 +20,16 @@ class ScorePoint extends PositionComponent implements Point {
 
   @override
   Future<void> onLoad() async {
-    final defaultPaint = Paint()
-      ..color = _defaultColor
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 5;
-    hitbox = RectangleHitbox()
-      ..paint = defaultPaint
-      ..renderShape = true;
+    hitbox = RectangleHitbox();
+    if (game.isDebug) {
+      final defaultPaint = Paint()
+        ..color = _defaultColor
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 5;
+
+      hitbox.paint = defaultPaint;
+      hitbox.renderShape = true;
+    }
 
     add(hitbox);
   }
