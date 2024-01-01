@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flame/components.dart';
-import 'package:flappy_dash/flame_game/components/obstacle.dart';
 import 'package:flappy_dash/flame_game/components/pipe.dart';
 import 'package:flappy_dash/flame_game/flappy_dash_world.dart';
 
